@@ -1,33 +1,48 @@
-# Agent Transient Amnesia Skill 🧠💥
+# Fresh Slate — Agent Transient Amnesia Skill 🧠💥
 
-> Give your AI agent temporary amnesia. One trigger, one fresh response, zero context leaked. 🔑
+> Make your AI agent forget you — for one turn, or for a whole session. No leaked context, no polluted answers.
 
-Trigger with `@fresh` or `@遗忘` — your agent forgets everything it knows about you for just one turn, then snaps right back. No new session needed, no context pollution. Works with any agent that has persistent memory.
+## v2 — What's New
+
+| Mode | Trigger | Duration |
+|------|---------|----------|
+| **Single-turn** | `@fresh` / `@遗忘` | One response only |
+| **Multi-turn** | `@陌生人` / `@stranger` | Until `@恢复` / `@restore` |
+
+```
+@fresh explain closures              ← single-turn amnesia
+@stranger who am I                   ← enter multi-turn amnesia
+what OS do I use                     ← still amnesiac
+@restore                             ← exit
+I said earlier that...               ← back to normal
+```
+
+## What It Strips
+
+The agent pretends these don't exist:
+
+- **Memory** — user preferences, habits, conventions
+- **User profile** — identity, background, skills
+- **Chat history** — everything before the trigger
+- **Project rules** — `.hermes.md`, `AGENTS.md`, commit conventions
+- **Persona** — SOUL.md, agent personality definition
+
+## What It Keeps
+
+- Tool definitions — the agent can still work
+- System facts — OS, working directory, PATH
+- World knowledge — languages, frameworks, public information
 
 ## Why?
 
-AI agents with long-term memory are great — until they're not. Sometimes you want a pure, unbiased answer that isn't colored by everything your agent knows about you:
-
-- Testing how your agent responds to a stranger
-- Getting generic advice without personal context
-- Checking if your agent's answer changes when it "knows" you
-- Just having a clean conversation for a moment
-
-## How It Works
-
-```
-You: @fresh What's the best programming language for beginners?
-Agent: Python is widely recommended for beginners — simple syntax, great community...
-
-You: But I already know Python basics, remember?
-Agent: Oh right! You've got variables, loops, functions down. Next step...
-```
-
-One trigger. One turn. Then back to normal. That's it.
+- Test how your agent responds to a stranger
+- Get unbiased advice without personal context
+- Check if answers change when the agent "knows" you
+- Clean conversations when you need them
 
 ## Install
 
-### One-liner (Hermes Agent)
+### Hermes Agent
 
 ```bash
 hermes skills install https://raw.githubusercontent.com/Chhhhhhhhhhhhhhh/agent-transient-amnesia-skill/master/SKILL.md
@@ -35,22 +50,28 @@ hermes skills install https://raw.githubusercontent.com/Chhhhhhhhhhhhhhh/agent-t
 
 ### Manual
 
-Copy `SKILL.md` to your agent's skills directory:
+Copy `SKILL.md` to your agent's skills directory.
 
-- **Hermes Agent**: `~/.hermes/skills/agent-transient-amnesia/SKILL.md`
-- **Claude Code**: `~/.claude/skills/agent-transient-amnesia/SKILL.md`
-- **Codex CLI**: add to your skills directory and reference in config
-
-Make sure your agent platform supports skill-based trigger words (`@fresh`, `@遗忘`).
+| Platform | Path |
+|----------|------|
+| Hermes Agent | `~/.hermes/skills/agent-transient-amnesia/SKILL.md` |
+| Claude Code | `~/.claude/skills/agent-transient-amnesia/SKILL.md` |
+| Codex CLI | add to skills directory and reference in config |
 
 ## Triggers
 
-| Trigger | Language | Example |
-|---------|----------|---------|
-| `@fresh` | English | `@fresh explain closures` |
-| `@遗忘` | Chinese | `@遗忘 解释一下闭包` |
+| Trigger | Language | Mode |
+|---------|----------|------|
+| `@fresh` | English | Single-turn |
+| `@遗忘` | Chinese | Single-turn |
+| `@陌生人` / `@stranger` | Chinese / English | Multi-turn start |
+| `@恢复` / `@restore` | Chinese / English | Multi-turn end |
 
-Only works at the **beginning** of a message. Using it mid-message won't trigger.
+All triggers must appear at the **beginning** of a message.
+
+## Honest Disclaimer
+
+Memory and user profiles are injected at the system level — the agent can't remove them from context, only **choose to ignore them**. For true process-level isolation, use your platform's native mechanisms (e.g. `hermes --profile fresh-slate --ignore-rules`).
 
 ## License
 
